@@ -1,24 +1,22 @@
-import app from "./server.js";
-import mongodb from "mongodb";
-import dotenv from "dotenv";
+import express from "express";
+const app = express();
 
-async function main() {
-    dotenv.config();
+const port = process.env.PORT || 5000;
 
-    const client = new mongodb.MongoClient(process.env.DB);
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
 
-    const port = process.env.PORT || 8000;
+    next();
+});
 
-    try {
-        await client.connect();
+app.use((req, res, next) => {
+    res.send("Welcome to Express");
+});
 
-        app.listen(port, () => {
-            console.log(`Server is running on port: ${port}`);
-        });
-    } catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-}
-
-main().catch(console.error);
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
