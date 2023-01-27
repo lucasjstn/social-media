@@ -1,9 +1,13 @@
 const colors = require("colors");
 const dotenv = require("dotenv");
 
-const app = require('./src/app')
+dotenv.config({ path: "./config.env" });
 
-const PORT = 3000;
+const app = require("./src/app");
+
+const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
-    console.log("Server is running");
-})
+    console.log(colors.yellow(
+        `Server is running on port:${PORT} as ${process.env.NODE_ENV} mode`)
+    );
+});
