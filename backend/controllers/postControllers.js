@@ -14,4 +14,24 @@ const getAllPosts = (req, res) => {
     });
 };
 
+const getPostById = (req, res) => {
+    const id = req.params.id * 1;
+    console.log(id);
+
+    const post = SAMPLE_POSTS.find((item) => item.id === id);
+
+    if (!post) {
+        return res.status(400).json({
+            status: "fail",
+            message: "post not found",
+        });
+    }
+
+    return res.status(200).json({
+            status: "success",
+            data: post,
+        });
+};
+
 module.exports = getAllPosts;
+module.exports = getPostById;
