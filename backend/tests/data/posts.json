@@ -3,28 +3,30 @@
         "id": 1,
         "title": "Hello World",
         "content": "This is a sample post for demonstration purposes.",
-        "author": "John Doe",
         "date_published": "2022-01-01"
     },
     {
         "id": 2,
         "title": "The Importance of Exercise",
         "content": "Regular exercise is crucial for maintaining good physical and mental health. It can help improve cardiovascular fitness, reduce the risk of chronic diseases, and boost overall well-being.",
-        "author": "Jane Smith",
         "date_published": "2022-02-15"
     },
     {
         "id": 3,
         "title": "Cooking with Tofu",
         "content": "Tofu is a versatile and nutritious ingredient that can be used in a variety of dishes. Whether you're a vegetarian or just looking to incorporate more plant-based foods into your diet, tofu is a great option to explore.",
-        "author": "Steve Johnson",
         "date_published": "2022-03-01"
     },
     {
         "id": 4,
         "title": "Exploring the City",
         "content": "There's so much to discover in any city, from the world-famous landmarks to the hidden gems tucked away in the streets. Whether you're a local or a visitor, taking the time to explore a city can be a rewarding and enriching experience.",
-        "author": "Emily Davis",
         "date_published": "2022-04-20"
+    },
+    {
+        "id": 5,
+        "title": "Hello World",
+        "content": "This is a sample post for demonstration purposes.",
+        "date": 1675003063705
     }
 ]
