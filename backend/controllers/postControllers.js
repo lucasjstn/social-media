@@ -34,8 +34,6 @@ const getPostById = (req, res) => {
     });
 };
 
-console.log(Date.now());
-
 const createPost = (req, res) => {
     console.log(req.body);
 
@@ -46,7 +44,7 @@ const createPost = (req, res) => {
         id: newId,
         title: req.body.title,
         content: req.body.content,
-        date: Date.now(),
+        createdAt: Date.now(),
     });
 
     SAMPLE_POSTS.push(newPost);
@@ -65,5 +63,50 @@ const createPost = (req, res) => {
     );
 };
 
-module.exports = { getAllPosts, getPostById, createPost };
+const updatePost = (req, res) => {
+    console.log(req.body.params);
+
+    // 1 check whether the post exist or not
+    const id = Number(req.params.id);
+    const post = SAMPLE_POSTS.find((item) => item.id === id);
+
+    console.log(post);
+    // 2 if it doesnt exist then return error
+    if (!post) {
+        return res.status(404).json({
+            status: "fail",
+            message: "post not found",
+        });
+    }
+
+    // 3 if it exists then update the post
+    const updatedPosts = SAMPLE_POSTS.map((item) => {
+        if (item.id === id) {
+            return {
+                ...item,
+                title: req.body.title,
+                content: req.body.content,
+                createdAt: Date.now(),
+            };
+        }
+
+        return item;
+    });
+
+    console.log(updatedPosts);
+
+    // 4 save the updated post
+    fs.writeFile(
+        path.resolve(__dirname, "../tests/data/posts.json"),
+        JSON.stringify(updatedPosts),
+        () => {
+            return res.status(200).json({
+                status: "success",
+                message: 'post sucessfully updated',
+            });
+        }
+    );
+};
+
+module.exports = { getAllPosts, getPostById, createPost, updatePost };
 // module.exports = ;
