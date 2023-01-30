@@ -102,11 +102,15 @@ const updatePost = (req, res) => {
         () => {
             return res.status(200).json({
                 status: "success",
-                message: 'post sucessfully updated',
+                message: "post sucessfully updated",
             });
         }
     );
 };
 
-module.exports = { getAllPosts, getPostById, createPost, updatePost };
+const deletePost = (req, res) => {
+    console.log("deleted");
+};
+
+module.exports = { getAllPosts, getPostById, createPost, updatePost, deletePost };
 // module.exports = ;
