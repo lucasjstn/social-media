@@ -109,8 +109,43 @@ const updatePost = (req, res) => {
 };
 
 const deletePost = (req, res) => {
-    console.log("deleted");
+
+    //1 verificar se o post existe
+    const id = Number(req.params.id);
+    const post = SAMPLE_POSTS.find((item) => {
+        return item.id === id;
+    });
+
+    if (!post) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'post doesnt exist',
+        });
+    }
+
+    const updatedPosts = SAMPLE_POSTS.map((item) => {
+        if(item.id !== id) {
+            return item;
+        }
+    })
+
+    fs.writeFile(
+        path.resolve(__dirname, "../tests/data/posts.json"),
+        JSON.stringify(updatedPosts),
+        () => {
+            return res.status(200).json({
+                status: "success",
+                message: "post sucessfully removed",
+            });
+        }
+    );
 };
 
-module.exports = { getAllPosts, getPostById, createPost, updatePost, deletePost };
+module.exports = {
+    getAllPosts,
+    getPostById,
+    createPost,
+    updatePost,
+    deletePost,
+};
 // module.exports = ;
