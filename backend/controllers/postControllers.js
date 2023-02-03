@@ -40,7 +40,6 @@ const getPostById = async (req, res) => {
         res.status(200).json({
             status: "success",
             data: newPost,
-             
         });
     } catch (error) {
         res.status(400).json({
@@ -56,7 +55,7 @@ const createPost = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: post,
+            data: newPost,
         });
     } catch (error) {
         res.status(400).json({
@@ -66,49 +65,29 @@ const createPost = async (req, res) => {
     }
 };
 
-const updatePost = (req, res) => {
-    console.log(req.body.params);
+const updatePost = async (req, res) => {
+    try {
+        const updatedPost = await Post.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
 
-    // 1 check whether the post exist or not
-    const id = Number(req.params.id);
-    const post = SAMPLE_POSTS.find((item) => item.id === id);
+        console.log(req.params.id);
 
-    console.log(post);
-    // 2 if it doesnt exist then return error
-    if (!post) {
-        return res.status(404).json({
+        res.status(200).json({
+            status: "success",
+            data: updatedPost,
+        });
+    } catch (error) {
+        res.status(400).json({
             status: "fail",
-            message: "post not found",
+            message: error,
         });
     }
-
-    // 3 if it exists then update the post
-    const updatedPosts = SAMPLE_POSTS.map((item) => {
-        if (item.id === id) {
-            return {
-                ...item,
-                title: req.body.title,
-                content: req.body.content,
-                createdAt: Date.now(),
-            };
-        }
-
-        return item;
-    });
-
-    console.log(updatedPosts);
-
-    // 4 save the updated post
-    fs.writeFile(
-        path.resolve(__dirname, "../tests/data/posts.json"),
-        JSON.stringify(updatedPosts),
-        () => {
-            return res.status(200).json({
-                status: "success",
-                message: "post sucessfully updated",
-            });
-        }
-    );
 };
 
 const deletePost = (req, res) => {
